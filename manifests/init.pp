@@ -291,7 +291,9 @@ class mit_krb5(
   Hash $capaths                     = {},
   Hash $appdefaults                 = {},
   Hash $realms                      = {},
-  Hash $dbmodules                   = {}
+  Hash $dbmodules                   = {},
+  String[1] $krb5_conf_d_path       = '/etc/krb5.conf.d',
+  Boolean $krb5_conf_d_purge        = false,
 ) {
   # SECTION: Parameter validation {
   # Boolean-type parameters are not type-validated at this time.
@@ -338,6 +340,16 @@ class mit_krb5(
   create_resources('mit_krb5::appdefaults', $appdefaults)
   create_resources('mit_krb5::realm', $realms)
   create_resources('mit_krb5::dbmodules', $dbmodules)
+
+  file { $krb5_conf_d_path:
+    ensure  => directory,
+    owner   => $krb5_conf_owner,
+    group   => $krb5_conf_group,
+    mode    => $krb5_conf_mode,
+    recurse => $krb5_conf_d_purge,
+    purge   => $krb5_conf_d_purge,
+    force   => $krb5_conf_d_purge,
+  }
 
   anchor { 'mit_krb5::end': }
   # END Resource creation }
