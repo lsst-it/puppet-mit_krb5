@@ -40,14 +40,13 @@
 # Copyright 2013 Patrick Mooney.
 # Copyright (c) IN2P3 Computing Centre, IN2P3, CNRS
 #
-class mit_krb5::logging(
-  $default      = '',
-  $admin_server = '',
-  $kdc          = '',
-  $defaults     = '',
+class mit_krb5::logging (
+  Optional[String] $default      = undef,
+  Optional[String] $admin_server = undef,
+  Optional[String] $kdc          = undef,
+  Optional[String] $defaults     = undef,
 ) {
-
-  include ::mit_krb5
+  include mit_krb5
 
   concat::fragment { 'mit_krb5::logging':
     target  => $mit_krb5::krb5_conf_path,

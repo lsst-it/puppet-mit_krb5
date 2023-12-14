@@ -16,15 +16,15 @@
 #   value should be db2 for the DB2 module and kldap for the LDAP module.
 #
 # [*disable_last_success*]
-#   If set to true, suppresses KDC updates to the “Last successful
-#   authentication” field of principal entries requiring preauthentication.
+#   If set to true, suppresses KDC updates to the â€œLast successful
+#   authenticationâ€� field of principal entries requiring preauthentication.
 #   Setting this flag may improve performance. (Principal entries which do not
-#   require preauthentication never update the “Last successful authentication”
+#   require preauthentication never update the â€œLast successful authenticationâ€�
 #   field.). First introduced in release 1.9.
 #
 # [*disable_lockout*]
-#   If set to true, suppresses KDC updates to the “Last failed authentication”
-#   and “Failed password attempts” fields of principal entries requiring
+#   If set to true, suppresses KDC updates to the â€œLast failed authenticationâ€�
+#   and â€œFailed password attemptsâ€� fields of principal entries requiring
 #   preauthentication. Setting this flag may improve performance, but also
 #   disables account lockout. First introduced in release 1.9.
 #
@@ -84,31 +84,31 @@
 # Copyright 2016 Modestas Vainius.
 # Copyright (c) IN2P3 Computing Centre, IN2P3, CNRS
 #
-define mit_krb5::dbmodules(
-  String $realm               = $title,
-  $database_name              = '',
-  $db_library                 = '',
-  $disable_last_success       = '',
-  $disable_lockout            = '',
-  $ldap_cert_path             = '',
-  $ldap_conns_per_server      = '',
-  $ldap_kadmind_dn            = '',
-  $ldap_kdc_dn                = '',
-  $ldap_kerberos_container_dn = '',
-  $ldap_servers               = '',
-  $ldap_service_password_file = '',
+define mit_krb5::dbmodules (
+  String $realm                                = $title,
+  Optional[String] $database_name              = undef,
+  Optional[String] $db_library                 = undef,
+  Optional[Boolean] $disable_last_success      = undef,
+  Optional[Boolean] $disable_lockout           = undef,
+  Optional[String] $ldap_cert_path             = undef,
+  Optional[String] $ldap_conns_per_server      = undef,
+  Optional[String] $ldap_kadmind_dn            = undef,
+  Optional[String] $ldap_kdc_dn                = undef,
+  Optional[String] $ldap_kerberos_container_dn = undef,
+  Optional[String] $ldap_servers               = undef,
+  Optional[String] $ldap_service_password_file = undef,
 ) {
   include mit_krb5
   ensure_resource('concat::fragment', 'mit_krb5::dbmodules_header', {
-    target  => $mit_krb5::krb5_conf_path,
-    order   => '30dbmodules_header',
-    content => "\n[dbmodules]\n",
+      target  => $mit_krb5::krb5_conf_path,
+      order   => '30dbmodules_header',
+      content => "\n[dbmodules]\n",
   })
   if (! empty($mit_krb5::db_module_dir)) {
     ensure_resource('concat::fragment', 'mit_krb5::dbmodules_db_module_dir', {
-      target  => $mit_krb5::krb5_conf_path,
-      order   => '31dbmodules_db_module_dir',
-      content => "    db_module_dir = ${mit_krb5::db_module_dir}\n",
+        target  => $mit_krb5::krb5_conf_path,
+        order   => '31dbmodules_db_module_dir',
+        content => "    db_module_dir = ${mit_krb5::db_module_dir}\n",
     })
   }
   concat::fragment { "mit_krb5::dbmodules::${realm}":
