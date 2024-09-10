@@ -292,7 +292,7 @@ class mit_krb5 (
   Optional[String] $spake_preauth_groups       = undef,
   Optional[String] $plugin_base_dir            = undef,
   Optional[String] $include                    = undef,
-  Optional[String] $includedir                 = undef,
+  Optional[Variant[String[1],Array[String[1]]]] $includedir                 = undef,
   Optional[String] $module                     = undef,
   Optional[String] $db_module_dir              = undef,
   String $krb5_conf_path                       = '/etc/krb5.conf',
