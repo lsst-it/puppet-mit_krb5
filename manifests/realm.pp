@@ -116,9 +116,9 @@
 # Copyright (c) IN2P3 Computing Centre, IN2P3, CNRS
 #
 define mit_krb5::realm (
-  Optional[Array] $kdc                  = undef,
+  Optional[Variant[String[1],Array[String[1]]]] $kdc                  = undef,
   Optional[String] $master_kdc          = undef,
-  Optional[Array] $admin_server         = undef,
+  Optional[Variant[String[1],Array[String[1]]]] $admin_server         = undef,
   Optional[String] $database_module     = undef,
   Optional[String] $default_domain      = undef,
   Optional[String] $v4_instance_convert = undef,
